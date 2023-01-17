@@ -1,0 +1,38 @@
+From 6b4a80fc38899d6ac5198c73349a0d3ffd0712f8 Mon Sep 17 00:00:00 2001
+From: Joel Winarske <joel.winarske@gmail.com>
+Date: Tue, 18 Oct 2022 07:12:09 -0700
+Subject: [PATCH] use prebuilt seccompiler
+
+Signed-off-by: Joel Winarske <joel.winarske@gmail.com>
+---
+ src/vmm/build.rs | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
+
+diff --git a/src/vmm/build.rs b/src/vmm/build.rs
+index bacc4e93..9b82ef25 100644
+--- a/src/vmm/build.rs
++++ b/src/vmm/build.rs
+@@ -58,20 +58,8 @@ fn run_seccompiler_bin(cargo_target: &str, json_path: &str, out_path: &str) {
+     let target_arch = env::var("CARGO_CFG_TARGET_ARCH").expect("Missing target arch.");
+ 
+     // Command for running seccompiler-bin
+-    let mut command = Command::new("cargo");
++    let mut command = Command::new("seccompiler-bin");
+     command.args(&[
+-        "run",
+-        "-p",
+-        "seccompiler",
+-        "--verbose",
+-        "--target",
+-        cargo_target,
+-        // We need to specify a separate build directory for seccompiler-bin. Otherwise, cargo will
+-        // deadlock waiting to acquire a lock on the build folder that the parent cargo process is
+-        // holding.
+-        "--target-dir",
+-        SECCOMPILER_BUILD_DIR,
+-        "--",
+         "--input-file",
+         json_path,
+         "--target-arch",
+-- 
+2.34.3
