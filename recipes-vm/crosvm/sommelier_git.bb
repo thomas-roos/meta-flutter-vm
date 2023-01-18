@@ -12,6 +12,7 @@ LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://../../LICENSE;md5=3723389cefa40c1f86f2d5c122b17d31"                      
 
 DEPENDS += "\
+    libxcb \
     libxkbcommon \
     pixman \
     virtual/egl \
@@ -19,7 +20,7 @@ DEPENDS += "\
     wayland-native \
 "
 
-REQUIRED_DISTRO_FEATURES = "wayland opengl"
+REQUIRED_DISTRO_FEATURES = "opengl wayland x11"
 
 S = "${WORKDIR}/git/vm_tools/sommelier"
 
