@@ -20,6 +20,8 @@ Builds shared module `libcrosvm_plugin.so`
 
 Builds binary sommelier
 
+- Note: unfortunately `x11` is required
+
 ### firecracker
 
 Requires the following flags in your local.conf
