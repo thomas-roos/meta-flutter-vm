@@ -9,7 +9,11 @@ HOMEPAGE = "https://firecracker-microvm.github.io/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-DEPENDS += "seccompiler-native"
+DEPENDS += "\
+    seccompiler-native \
+"
+
+REQUIRED_DISTRO_FEATURES = "virtualization"
 
 S = "${WORKDIR}/git"
 
@@ -22,7 +26,7 @@ SRC_URI += "\
     file://0001-use-prebuilt-seccompiler.patch \
     "
 
-inherit cargo
+inherit cargo features_check
 
 CARGO_SRC_DIR = "src/firecracker"
 

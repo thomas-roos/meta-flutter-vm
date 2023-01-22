@@ -13,6 +13,8 @@ DEPENDS += "\
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland wayland-native', '', d)} \
 "
 
+REQUIRED_DISTRO_FEATURES = "virtualization kvm"
+
 S = "${WORKDIR}/git"
 
 SRCREV = "4016e4475a0ad7b4a617acf447006f0d2cfbd7b5"
@@ -24,7 +26,7 @@ SRC_URI += "\
     file://0001-Remove-rust-toolchain-lock.patch \
 "
 
-inherit cargo pkgconfig
+inherit cargo pkgconfig features_check
 
 CARGO_BUILD_FLAGS += '--bin crosvm --features "gpu"'
 

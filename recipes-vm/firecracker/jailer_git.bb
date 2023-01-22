@@ -7,7 +7,7 @@ HOMEPAGE = "https://firecracker-microvm.github.io/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-inherit cargo
+REQUIRED_DISTRO_FEATURES = "virtualization"
 
 S = "${WORKDIR}/git"
 
@@ -16,6 +16,8 @@ SRCREV = "ad7163093159c3af3b08c10b048a7df8f4950af0"
 PV:append = ".ad71630931"
 
 SRC_URI += "gitsm://github.com/firecracker-microvm/firecracker.git;protocol=https;nobranch=1;branch=master"
+
+inherit cargo features_check
 
 CARGO_SRC_DIR = "src/jailer"
 
