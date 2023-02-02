@@ -11,6 +11,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 DEPENDS += "\
     seccompiler-native \
+    clang-native \
 "
 
 REQUIRED_DISTRO_FEATURES = "virtualization"
@@ -24,9 +25,11 @@ PV:append = ".ad71630931"
 SRC_URI += "\
     gitsm://github.com/firecracker-microvm/firecracker.git;protocol=https;nobranch=1;branch=master \
     file://0001-use-prebuilt-seccompiler.patch \
+    file://run-ptest \
+    file://ptest.json \
     "
 
-inherit cargo features_check
+inherit cargo features_check ptest
 
 CARGO_SRC_DIR = "src/firecracker"
 
@@ -176,4 +179,18 @@ do_configure:prepend:x86_64() {
 do_configure:prepend:aarch64() {
     cp ${S}/resources/seccomp/aarch64-unknown-linux-musl.json \
         ${S}/resources/seccomp/aarch64-poky-linux-musl.json
+}
+
+RDEPENDS:${PN}-ptest += "\
+        bash \
+        wget \
+"
+# docker is necessary for the devtool firecracker tests
+# docker
+
+do_install_ptest() {
+        install -d ${D}${PTEST_PATH}/tests
+        cp ${S}/../ptest.json ${D}${PTEST_PATH}/tests/
+        
+        cp -rf ${S}/* ${D}${PTEST_PATH}/tests/
 }
